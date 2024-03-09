@@ -25,19 +25,25 @@ function Login() {
       });
       console.log(res);
       if (res.status === 200) {
-        const { user, token } = res.data;
-        setUser({ ...user, token });
-        localStorage.setItem("user", JSON.stringify({ ...user, token })); 
-        navigate("/");
+        const { user, manager, token } = res.data;
+        if (manager) {
+          setUser({ ...manager, token });
+          localStorage.setItem("user", JSON.stringify({ ...manager, token }));
+          navigate("/");
+        }
+        if (user) {
+          setUser({ ...user, token });
+          localStorage.setItem("user", JSON.stringify({ ...user, token }));
+          navigate("/");
+        }
       }
     } catch (error) {
       console.log(error);
       if (error.response.status === 404) {
         toast.error("User not found");
-      }else  if (error.response.status === 401) {
+      } else if (error.response.status === 401) {
         toast.error("Invalid password");
-      }
-      else {
+      } else {
         toast.error(error.message);
       }
     }

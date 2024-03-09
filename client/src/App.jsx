@@ -5,6 +5,8 @@ import RegisterTurf from "./pages/RegisterTurf";
 import Register from "./pages/Register";
 import TurfListingPage from "./pages/turfListingPage";
 import TurfDetailPage from "./pages/TurfDetailPage";
+import Manager from "./pages/manager";
+
 function App() {
   return (
     <div className=" bg-bg h-max ">
@@ -16,6 +18,7 @@ function App() {
            <Route path="/registerTurf" element={<RegisterTurf />} />
            <Route path="/turfListing" element={<TurfListingPage />} />
            <Route path="/turf/:turfId" element={<TurfDetailPage />} />
+           <Route path="/manager" element={<Manager />} />
         </Routes>
 
       </BrowserRouter>

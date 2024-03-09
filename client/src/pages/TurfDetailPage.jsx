@@ -1,11 +1,13 @@
 import UserNav from "../components/UserNav";
 import turfImg from "../assets/turfImage.png";
-
+import useUserStore from "../store";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function TurfDetailPage() {
   const [date, setDate] = useState(new Date());
@@ -16,6 +18,7 @@ function TurfDetailPage() {
   const [data, setData] = useState();
   const { turfId } = useParams();
   const [selectedTime, setSelectedTime] = useState(null);
+  const { user } = useUserStore();
   console.log(turfId);
   const blockedDates = [
     new Date("2024-03-10"),
@@ -70,14 +73,57 @@ function TurfDetailPage() {
     getBookedDates();
     getBookings();
   }, []);
+  const bookTurf = async () => {
+    try {
+      const hours = selectedTime.getHours();
+const minutes = selectedTime.getMinutes();
+      const response = {
+        user: user._id,
+        turf: turfId,
+        totalAmount: data.price * hours,
+        date,
+        time: hours + ":" + (minutes < 10 ? "0" : "") + minutes,
+        hours,
+      };
 
-
-  const excludedTime = bookings.map(booking => {
-    // console.log(date , booking.date)
-    if(new Date(booking.date) === date ){
-        console.log(date , new Date(booking.date))
+      const res = await axios.post(
+        `http://localhost:5000/api/booking/create`,
+        response
+      );
+      console.log(res);
+      if (res.status === 201) {
+        console.log("Booking confirmed");
+        setDate("")
+        setHours(1)
+        setSelectedTime("")
+        toast.success("Booking confirmed")
+      }
+    } catch (error) {
+      console.error("Error booking turf:", error);
+      toast.error(error.message)
     }
-  })
+  };
+  // const excludeTimes =
+  //   bookings &&
+  //   bookings
+  //     .filter((booking) => {
+  //       const bookingDate = new Date(booking.date);
+  //       return (
+  //         bookingDate.getDate() === date.getDate() &&
+  //         bookingDate.getMonth() === date.getMonth() &&
+  //         bookingDate.getFullYear() === date.getFullYear()
+  //       );
+  //     })
+  //     .map((booking) => {
+  //       const bookingTime = new Date(booking.date);
+  //       return new Date(
+  //         bookingTime.getFullYear(),
+  //         bookingTime.getMonth(),
+  //         bookingTime.getDate(),
+  //         bookingTime.getHours(),
+  //         bookingTime.getMinutes()
+  //       );
+  //     });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -86,6 +132,12 @@ function TurfDetailPage() {
   return (
     <div>
       <UserNav />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        newestOnTop={false}
+        closeOnClick
+      />
       <div className="p-24 flex gap-20 ">
         <img src={turfImg} alt="" className="w-[45vw] object-contain" />
         <div className="text-xl w-[30vw]  flex flex-col gap-3">
@@ -132,6 +184,7 @@ function TurfDetailPage() {
                 showTimeSelect
                 showTimeSelectOnly
                 dateFormat="HH:MM "
+                //excludeTimes={excludeTimes}
               />
             </div>
 
@@ -146,7 +199,10 @@ function TurfDetailPage() {
                 value={hours}
               />
             </div>
-            <button className="bg-[#FCA311]  text-black p-3 px-2 w-[90%] ">
+            <button
+              onClick={() => bookTurf()}
+              className="bg-[#FCA311]  text-black p-3 px-2 w-[90%] "
+            >
               Book Turf
             </button>
           </div>

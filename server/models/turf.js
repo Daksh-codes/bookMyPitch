@@ -58,9 +58,9 @@ const turfSchema = mongoose.Schema({
       trim: true,
     },
   ],
-  isBooked : {
+  isManager : {
     type : Boolean,
-    default : false
+    default : true
   }
 });
 

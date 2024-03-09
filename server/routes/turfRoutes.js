@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 export const upload = multer({ storage: storage });
 
 router.get("/location", getAllTurfLocations)
-router.post("/register",Auth , upload.array('turfImages', 5), createTurf);
+router.post("/register", upload.array('turfImages', 5), createTurf);
 router.get("/:id",  getTurfById);
 
 

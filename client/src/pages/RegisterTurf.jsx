@@ -3,6 +3,11 @@ import logo from "../assets/bookMyPitch.png";
 import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function RegisterTurf() {
   const [email, setEmail] = useState("");
@@ -14,26 +19,83 @@ function RegisterTurf() {
   const [turfName, setTurfName] = useState("");
   const [openTime, setOpenTime] = useState();
   const [closeTime, setCloseTime] = useState();
-  const [location , setLocation ] = useState("");
-  const submitData = (e) => {
+  const [location, setLocation] = useState("");
+  const [desc, setDesc] = useState("");
+  const [city, setCity] = useState("");
+  const [images, setImages] = useState([]);
+
+  const submitData = async (e) => {
     e.preventDefault();
-    console.log(
-      email,
-      pass,
-      fname,
-      lname,
-      phoneno,
-      turfName,
-      price,
-      openTime,
-      closeTime
-    );
+    try {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("firstName", fname);
+      formData.append("lastName", lname);
+      formData.append("password", pass);
+      formData.append("phoneno", phoneno);
+      formData.append("price", price);
+      formData.append("turfName", turfName);
+      formData.append("openTime", openTime);
+      formData.append("closeTime", closeTime);
+      formData.append("address", location);
+      formData.append("desc", desc);
+      formData.append("city", city);
+      images.forEach((image) => {
+        formData.append("turfImages", image);
+      });
+      //console.log(user)
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      };
+      const response = await axios.post(
+        "http://localhost:5000/api/turf/register",
+        formData,
+        {
+          headers: headers,
+        }
+      );
+      console.log("Response:", response.data);
+      if (response.status === 201) {
+        toast.success(response.message);
+        setEmail("");
+        setCity("");
+        setCloseTime("");
+        setDesc("");
+        setFname("");
+        setImages([]);
+        setLname("");
+        setOpenTime("");
+        setPass("");
+        setPhoneno("");
+        setTurfName("");
+        setPrice("");
+        setDesc("");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error(error.message);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
   };
 
   return (
     <div className="">
       <Nav />
-      <div className="pt-36 font-semibold justify-center text-4xl flex items-center flex-col gap-6">
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        newestOnTop={false}
+        closeOnClick
+      />
+      <form
+        encType="multipart/form-data"
+        onSubmit={submitData}
+        className="pt-36 font-semibold justify-center text-4xl flex items-center flex-col gap-6"
+      >
         <h2>Register</h2>
         {/* first name */}
         <div className="flex gap-4">
@@ -114,34 +176,83 @@ function RegisterTurf() {
             className="w-[30vw] p-2 bg-bg border-[1px] border-black"
           />
         </div>
-        {/* opening time */}
+        {/* Opening time */}
         <div className="flex flex-col text-xl">
-          <label htmlFor="openTime">Opening time </label>
-          <input
-            type="time"
-            value={openTime}
-            onChange={(e) => setOpenTime(e.target.value)}
-            id="openTime"
+          <label htmlFor="openTime">Opening time</label>
+          <DatePicker
+            selected={openTime}
+            onChange={setOpenTime}
+            showTimeSelect
+            showTimeSelectOnly
+            timeInputLabel="Time:"
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            dateFormat="HH:mm"
             className="w-[30vw] p-2 bg-bg border-[1px] border-black"
           />
         </div>
-        {/* closing time */}
+        {/* Closing time */}
         <div className="flex flex-col text-xl">
-          <label htmlFor="closeTime">Closing time </label>
-          <input
-            type="time"
-            value={closeTime}
-            onChange={(e) => setCloseTime(e.target.value)}
-            id="closeTime"
+          <label htmlFor="closeTime">Closing time</label>
+          <DatePicker
+            selected={closeTime}
+            onChange={setCloseTime}
+            showTimeSelect
+            showTimeSelectOnly
+            timeInputLabel="Time:"
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            dateFormat="HH:mm"
             className="w-[30vw] p-2 bg-bg border-[1px] border-black"
           />
         </div>
         <div className="flex flex-col text-xl">
           <label htmlFor="location">Address</label>
-          <textarea value={location} onChange={(e) => setLocation(e.target.value)} id="location"  rows="3" className="w-[30vw] bg-bg border-[1px] border-black "></textarea>
+          <textarea
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            id="location"
+            rows="3"
+            className="w-[30vw] bg-bg border-[1px] border-black "
+          ></textarea>
+        </div>
+        {/* desc */}
+        <div className="flex flex-col text-xl">
+          <label htmlFor="desc">Description</label>
+          <textarea
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            id="desc"
+            rows="3"
+            className="w-[30vw] bg-bg border-[1px] border-black "
+          ></textarea>
+        </div>
+        {/* City input */}
+        <div className="flex flex-col text-xl">
+          <label htmlFor="city">City</label>
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            id="city"
+            className="w-[30vw] p-2 bg-bg border-[1px] border-black"
+          />
+        </div>
+        {/* Image upload input */}
+        <div className="flex flex-col text-xl">
+          <label htmlFor="images">Upload Images (up to 5)</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImageChange}
+            id="turfImages"
+            name="turfImages"
+            className="w-[30vw] p-2 bg-bg border-[1px] border-black"
+          />
         </div>
         <button
-          onClick={(e) => submitData(e)}
+          type="submit"
           className="p-2 w-[30vw] font-light text-xl bg-black text-white hover:bg-neutral-800"
         >
           Next
@@ -153,7 +264,7 @@ function RegisterTurf() {
             Login
           </Link>
         </h3>
-      </div>
+      </form>
       <Footer />
     </div>
   );

@@ -4,7 +4,7 @@ import useUserStore from "../store";
 
 function UserNav() {
   const {user , removeUser } = useUserStore()
-  // console.log(user)
+   console.log(user)
   const date = new Date()
   return (
     <nav className="fixed top-0 bg-bg z-30 w-screen px-20 py-1 flex items-center justify-between border-b-[1px] border-stone-500 ">
@@ -13,7 +13,8 @@ function UserNav() {
         <h2 className="text-xl font-bold text-accent">BOOK MY PITCH</h2>
       </Link >
       <div className="flex items-center gap-16 font-medium text-lg">
-        <Link to={`/turfListing?minPrice:0&&maxPrice:10000`}>Book Turf</Link >
+        {user.isManager ? " " : <Link to={`/turfListing?minPrice:0&&maxPrice:10000`}>Book Turf</Link >}
+        {/* <Link to={`/turfListing?minPrice:0&&maxPrice:10000`}>Book Turf</Link > */}
         <button onClick={removeUser} >Logout</button>
         <h2>{user ? user.firstName : "user"}</h2>
       </div>
