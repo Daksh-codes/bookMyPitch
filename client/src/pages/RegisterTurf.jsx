@@ -8,6 +8,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
 
 function RegisterTurf() {
   const [email, setEmail] = useState("");
@@ -28,6 +30,9 @@ function RegisterTurf() {
     e.preventDefault();
     try {
       const formData = new FormData();
+      let d = new Date(openTime)
+      console.log(`${openTime.getHours()}:${openTime.getMinutes()}`)
+
       formData.append("email", email);
       formData.append("firstName", fname);
       formData.append("lastName", lname);
@@ -35,7 +40,7 @@ function RegisterTurf() {
       formData.append("phoneno", phoneno);
       formData.append("price", price);
       formData.append("turfName", turfName);
-      formData.append("openTime", openTime);
+      formData.append("openTime", `${openTime.getHours()}:${openTime.getMinutes()}`);
       formData.append("closeTime", closeTime);
       formData.append("address", location);
       formData.append("desc", desc);
@@ -43,34 +48,35 @@ function RegisterTurf() {
       images.forEach((image) => {
         formData.append("turfImages", image);
       });
+
       //console.log(user)
       const headers = {
         "Content-Type": "multipart/form-data",
       };
-      const response = await axios.post(
-        "http://localhost:5000/api/turf/register",
-        formData,
-        {
-          headers: headers,
-        }
-      );
-      console.log("Response:", response.data);
-      if (response.status === 201) {
-        toast.success(response.message);
-        setEmail("");
-        setCity("");
-        setCloseTime("");
-        setDesc("");
-        setFname("");
-        setImages([]);
-        setLname("");
-        setOpenTime("");
-        setPass("");
-        setPhoneno("");
-        setTurfName("");
-        setPrice("");
-        setDesc("");
-      }
+      // const response = await axios.post(
+      //   "http://localhost:5000/api/turf/register",
+      //   formData,
+      //   {
+      //     headers: headers,
+      //   }
+      // );
+      // console.log("Response:", response.data);
+      // if (response.status === 201) {
+      //   toast.success(response.message);
+      //   setEmail("");
+      //   setCity("");
+      //   setCloseTime("");
+      //   setDesc("");
+      //   setFname("");
+      //   setImages([]);
+      //   setLname("");
+      //   setOpenTime("");
+      //   setPass("");
+      //   setPhoneno("");
+      //   setTurfName("");
+      //   setPrice("");
+      //   setDesc("");
+      // }
     } catch (error) {
       console.error("Error:", error);
       toast.error(error.message);
@@ -194,7 +200,7 @@ function RegisterTurf() {
         {/* Closing time */}
         <div className="flex flex-col text-xl">
           <label htmlFor="closeTime">Closing time</label>
-          <DatePicker
+          {/* <DatePicker
             selected={closeTime}
             onChange={setCloseTime}
             showTimeSelect
@@ -204,7 +210,8 @@ function RegisterTurf() {
             timeIntervals={15}
             dateFormat="HH:mm"
             className="w-[30vw] p-2 bg-bg border-[1px] border-black"
-          />
+          /> */}
+          <TimePicker onChange={setCloseTime} value={closeTime}   />
         </div>
         <div className="flex flex-col text-xl">
           <label htmlFor="location">Address</label>

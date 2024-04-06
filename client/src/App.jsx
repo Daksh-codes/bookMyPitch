@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import RegisterTurf from "./pages/RegisterTurf";
+import RegisterTurf1 from "./pages/RegisterTurf1";
 import Register from "./pages/Register";
 import TurfListingPage from "./pages/turfListingPage";
 import TurfDetailPage from "./pages/TurfDetailPage";
@@ -12,17 +12,15 @@ function App() {
     <div className=" bg-bg h-max ">
       <BrowserRouter>
         <Routes>
-           <Route path="/" element={<Home />} />
-           <Route path="/login" element={<Login />} />
-           <Route path="/register" element={<Register />} />
-           <Route path="/registerTurf" element={<RegisterTurf />} />
-           <Route path="/turfListing" element={<TurfListingPage />} />
-           <Route path="/turf/:turfId" element={<TurfDetailPage />} />
-           <Route path="/manager" element={<Manager />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/registerTurf" element={<RegisterTurf1 />} />
+          <Route path="/turfListing" element={<TurfListingPage />} />
+          <Route path="/turf/:turfId" element={<TurfDetailPage />} />
+          <Route path="/manager" element={<Manager />} />
         </Routes>
-
       </BrowserRouter>
-     
     </div>
   );
 }
