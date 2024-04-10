@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: "#F7EDE2",
+        //bg: "#F7EDE2",
+        bg: "#f8edeb",
+        //bg : "#cbdfbd" ,
         accent: "#083030",
       },boxShadow: {
         '3xl': '12px 12px 1px 0px rgba(0, 0, 0, 0.9)',

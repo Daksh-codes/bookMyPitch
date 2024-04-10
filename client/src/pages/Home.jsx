@@ -5,9 +5,17 @@ import heroImg2 from "../assets/heroImg2.png";
 import whyUsImg from "../assets/whyUsImg.png";
 import useUserStore from "../store";
 import UserNav from "../components/UserNav"
+import Manager from "./manager";
+import { Link } from "react-router-dom";
 
 function Home() {
   const {user} = useUserStore()
+
+  // if(user.isManager){
+  //   return <Manager />
+  // }
+
+
   return (
     <div className="h-screen ">
       {user ?  <UserNav /> :  <Nav /> }
@@ -33,12 +41,13 @@ function Home() {
             football, or any sport you desire.
           </p>
           <div className="flex gap-4">
-            <button className="hover:bg-accent text-lg font-medium bg-black text-white w-[40%] px-8 py-2">
+            <Link to={`${user ? `/turfListing?minPrice=0&maxPrice=10000` : '/login'}`} className="hover:bg-accent text-lg font-medium bg-black text-white w-[40%] px-8 py-2">
               Book Turf
-            </button>
-            <button className="hover:bg-accent hover:text-white text-lg font-medium border-[1px] w-[40%] border-black py-2 px-4">
+            </Link >
+            {user ? "" : <Link to={"/registerTurf"} className="hover:bg-accent hover:text-white text-lg font-medium border-[1px] w-[40%] border-black py-2 px-4">
               Register Turf
-            </button>
+            </Link > }
+            
           </div>
         </div>
         {/* -------------  hero images ------------ */}
@@ -115,7 +124,7 @@ function Home() {
       <div className="bg-bg p-24">
         <h2 className="text-5xl  p-8 border-[1px] border-black bg-orange-200">
           Join our amazing community by registering your turf : {" "}
-          <span className="underline text-accent">Register Turf</span>
+          <Link to={"/registerTurf"} className="underline text-accent">Register Turf</Link>
         </h2>
       </div>
       <Footer />

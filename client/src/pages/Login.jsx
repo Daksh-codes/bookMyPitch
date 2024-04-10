@@ -17,19 +17,26 @@ function Login() {
 
   const submitData = async (e) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     console.log(email, pass);
     try {
+      if (!emailRegex.test(email)) {
+        toast.error("Invalid email address");
+        return;
+      }
+
       const res = await axios.post("http://localhost:5000/api/users/login", {
         email,
         password: pass,
       });
       console.log(res);
+      console.log("hahah");
       if (res.status === 200) {
         const { user, manager, token } = res.data;
         if (manager) {
           setUser({ ...manager, token });
           localStorage.setItem("user", JSON.stringify({ ...manager, token }));
-          navigate("/");
+          navigate("/manager");
         }
         if (user) {
           setUser({ ...user, token });
@@ -39,9 +46,9 @@ function Login() {
       }
     } catch (error) {
       console.log(error);
-      if (error.response.status === 404) {
+      if (error.response && error.response.status === 404) {
         toast.error("User not found");
-      } else if (error.response.status === 401) {
+      } else if (error.response && error.response.status === 401) {
         toast.error("Invalid password");
       } else {
         toast.error(error.message);

@@ -90,6 +90,7 @@ function RegisterTurf1() {
       formData.append("address", address);
       formData.append("desc", desc);
       formData.append("city", city);
+      formData.append("totalHours" , )
       images.forEach((image) => {
         formData.append("images", image);
       });
@@ -127,7 +128,7 @@ function RegisterTurf1() {
       />
       {pageState === 1 && (
         <form
-          onSubmit={validateFirstPage}
+     
           className="border-2 h-max border-accent p-8 m-20 mt-32 text-xl flex flex-col gap-4 "
         >
           <h1 className="font-bold text-3xl mb-8 text-accent">
@@ -208,7 +209,7 @@ function RegisterTurf1() {
             <button
               className="bg-neutral-800 w-[50%] px-8 py-2 text-white hover:bg-black"
               onClick={(e) => validateFirstPage(e)}
-              type="submit"
+
             >
               Next
             </button>
@@ -232,7 +233,7 @@ function RegisterTurf1() {
               onChange={(e) => {
                 setTurfName(e.target.value);
               }}
-              className="rounded-sm bg-bg border-black border-[1px] p-1 w-[14.3rem]"
+              className="rounded-sm bg-bg border-black border-[1px] p-1 w-[100%]"
             />
           </div>
 
@@ -248,7 +249,7 @@ function RegisterTurf1() {
               timeFormat="HH:mm"
               timeIntervals={30}
               dateFormat="HH:mm"
-              className="rounded-sm bg-bg border-black border-[1px] p-1 w-max"
+              className="rounded-sm bg-bg border-black border-[1px] p-1 w-[100%]"
             />
           </div>
 
@@ -264,7 +265,7 @@ function RegisterTurf1() {
               timeFormat="HH:mm"
               timeIntervals={30}
               dateFormat="HH:mm"
-              className="rounded-sm bg-bg border-black border-[1px] p-1 w-max"
+              className="rounded-sm bg-bg border-black border-[1px] p-1 w-full"
             />
           </div>
 
@@ -278,7 +279,7 @@ function RegisterTurf1() {
               onChange={(e) => {
                 setPrice(e.target.value);
               }}
-              className="rounded-sm bg-bg border-black border-[1px] p-1 w-[14.3rem]"
+              className="rounded-sm bg-bg border-black border-[1px] p-1 w-full"
             />
           </div>
 
@@ -292,7 +293,7 @@ function RegisterTurf1() {
               onChange={(e) => {
                 setCity(e.target.value);
               }}
-              className="rounded-sm bg-bg border-black border-[1px] p-1 w-[14.3rem]"
+              className="rounded-sm bg-bg border-black border-[1px] p-1 w-full"
             />
           </div>
           <div className="flex flex-col ">
@@ -350,7 +351,8 @@ function RegisterTurf1() {
             </button>
             <button
               className="bg-neutral-800 w-[50%] px-8 py-2 text-white hover:bg-black"
-              onClick={() => setPageState(pageState + 1)}
+              //onClick={(e) => handleSubmitForm(e)}
+              type="submit"
             >
               Submit
             </button>

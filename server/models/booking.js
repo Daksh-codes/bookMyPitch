@@ -16,16 +16,24 @@ const bookingSchema = new mongoose.Schema({
     required: true,
   },
   date : {
-    type : Date ,
+    type : String ,
     required : true
   },
-  time: {
+  startTime: {
+    type: String,
+    required: true,
+  },
+  endTime:{
     type: String,
     required: true,
   },
   hours : {
     type: Number,
     required: true,
+  },
+  onHold : {
+    type : Boolean , 
+    default : true 
   }
 });
 

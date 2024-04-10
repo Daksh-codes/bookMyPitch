@@ -8,8 +8,10 @@ const useUserStore = create((set) => ({
   },
   removeUser: () => {
     console.log('Removing user');
+
     set({ user: null });
     localStorage.removeItem("user");
+
   },
 }));
 
@@ -18,6 +20,5 @@ const storedUser = localStorage.getItem("user");
 if (storedUser) {
   useUserStore.setState({ user: JSON.parse(storedUser) });
 }
-//console.log(storedUser)
 
 export default useUserStore;

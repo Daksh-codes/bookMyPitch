@@ -44,11 +44,11 @@ const turfSchema = mongoose.Schema({
     required: true,
   },
   openTime: {
-    type: String,
+    type: Date,
     required: true,
   },
   closeTime: {
-    type: String,
+    type: Date,
     required: true,
   },
   imageUrl: [

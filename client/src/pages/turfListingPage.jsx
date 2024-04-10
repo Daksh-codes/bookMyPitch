@@ -15,17 +15,19 @@ function TurfListingPage() {
     const fetchData = async () => {
       try {
         const requestData = {
-          name: queryParams.get("name"),
-          location: queryParams.get("location"),
-          minPrice: queryParams.get("minPrice"),
-          maxPrice: queryParams.get("maxPrice"),
-          date: queryParams.get("date"),
+          "name": queryParams.get("name"),
+          "location": queryParams.get("location"),
+          "minPrice": queryParams.get("minPrice"),
+          "maxPrice": queryParams.get("maxPrice"),
+          "date": queryParams.get("date"),
         };
-  
+        
+        console.log(queryParams.get("date"))
         const res = await axios.post(
           "http://localhost:5000/api/booking/checkAvailability",
-          requestData
+           requestData
         );
+        console.log(res.data)
         setData(res.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -38,7 +40,7 @@ function TurfListingPage() {
     <div className="h-max bg-bg">
       <UserNav />
       <Search />
-      <div className="flex flex-wrap px-24 justify-between py-20 gap-4">
+      <div className="flex flex-wrap px-24 py-20 gap-4">
         {data.map((turf, index) => (
           <TurfCard
             key={index}
@@ -46,6 +48,8 @@ function TurfListingPage() {
             name={turf.turfName}
             location={turf.city}
             price={turf.price}
+            imgUrl = {turf.imageUrl[0]}
+            sImgUrl = {turf.imageUrl[1]}
           />
         ))}
       </div>

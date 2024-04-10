@@ -39,14 +39,15 @@ function Search() {
     const yyyy = dateObject.getFullYear();
     const mm = dateObject.getMonth();
     const dd = dateObject.getDate();
-    const formattedDate = `${yyyy}-${mm}-${dd}`;
-    console.log(name, location, minPrice, maxPrice, formattedDate);
+    const isoString = `${yyyy}-${mm}-${dd}T00:00:00.000Z`;
+    //const formattedDate = `${yyyy}-${mm}-${dd}`;
+    console.log(name, location, minPrice, maxPrice, isoString);
     let queryString = `/turfListing?`;
     queryString += name ? `name=${name}&` : "";
     queryString += location ? `location=${location}&` : "";
     queryString += minPrice ? `minPrice=${minPrice}&` : "";
     queryString += maxPrice ? `maxPrice=${maxPrice}&` : "";
-    queryString += formattedDate ? `date=${formattedDate}` : "";
+    queryString += isoString ? `date=${isoString}` : "";
 
     navigate(queryString);
   };
@@ -62,7 +63,7 @@ function Search() {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <DatePicker
+      {/*<DatePicker
         selected={date}
         onChange={(date) => setDate(date)}
         minDate={new Date()}
@@ -70,7 +71,7 @@ function Search() {
         isClearable
         className="rounded-sm p-2"
         withPortal
-      />
+      />*/}
       <div className="flex gap-2 bg-accent w-[15vw] ">
         <input
           type="number"
