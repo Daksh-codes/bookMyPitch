@@ -18,7 +18,7 @@ function Manager() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/booking/${user._id}`
+          `https://bookmypitch.onrender.com/api/booking/${user._id}`
         );
         setData(res.data);
         console.log(res.data);
@@ -51,7 +51,7 @@ function Manager() {
       console.log("Yes");
       try {
         const res = await axios.delete(
-          `http://localhost:5000/api/turf/delete/${user._id}`,
+          `https://bookmypitch.onrender.com/api/turf/delete/${user._id}`,
           
         );
         console.log(res);

@@ -19,7 +19,7 @@ function Register() {
     e.preventDefault();
     console.log(email, pass, fname, lname, phoneno);
     try {
-      const res = await axios.post("http://localhost:5000/api/users/register", {
+      const res = await axios.post("https://bookmypitch.onrender.com//api/users/register", {
         firstName: fname,
         lastName: lname,
         email,

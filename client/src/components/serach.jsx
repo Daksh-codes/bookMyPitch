@@ -22,7 +22,7 @@ function Search() {
   useEffect(() => {
     const getAllLocations = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/turf/location");
+        const res = await axios.get("https://bookmypitch.onrender.com/api/turf/location");
         if (res.status === 200) {
           setLocations(res.data);
         }

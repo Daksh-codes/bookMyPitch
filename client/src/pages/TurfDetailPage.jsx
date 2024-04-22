@@ -26,7 +26,7 @@ function TurfDetailPage() {
   const getBlockedDates = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/booking/getBlockedDates/${turfId}`
+        `https://bookmypitch.onrender.com/api/booking/getBlockedDates/${turfId}`
       );
       setBlockedDates(res.data);
     } catch (error) {
@@ -38,7 +38,7 @@ function TurfDetailPage() {
     const getTurf = async () => {
       try {
         setIsLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/turf/${turfId}`);
+        const res = await axios.get(`https://bookmypitch.onrender.com/api/turf/${turfId}`);
         setData(res.data);
         console.log(res.data);
         if (res.data) {
@@ -109,7 +109,7 @@ function TurfDetailPage() {
   //       const isoString = `${year}-${month}-${day}T00:00:00.000Z`;
 
   //       const res = await axios.post(
-  //         `http://localhost:5000/api/booking/getBookings/${turfId}`,
+  //         `https://bookmypitch.onrender.com/api/booking/getBookings/${turfId}`,
   //         { date: isoString }
   //       );
   //       console.log("booking data", res.data);
@@ -154,7 +154,7 @@ function TurfDetailPage() {
         const isoString = `${year}-${month}-${day}T00:00:00.000Z`;
 
         const res = await axios.post(
-          `http://localhost:5000/api/booking/getBookings/${turfId}`,
+          `https://bookmypitch.onrender.com/api/booking/getBookings/${turfId}`,
           { date: isoString }
         );
         console.log("booking data", res.data);
@@ -255,7 +255,7 @@ function TurfDetailPage() {
       };
 
       const bookingRes = await axios.post(
-        "http://localhost:5000/api/booking/create",
+        "https://bookmypitch.onrender.com/api/booking/create",
         body,
         { headers }
       );
@@ -263,7 +263,7 @@ function TurfDetailPage() {
       if (bookingRes.status === 201) {
         const newBody = { ...body, bookingId: bookingRes.data._id };
         const res = await axios.post(
-          "http://localhost:5000/api/booking/createPaymentSession",
+          "https://bookmypitch.onrender.com/api/booking/createPaymentSession",
           newBody,
           { headers }
         );
@@ -326,7 +326,7 @@ function TurfDetailPage() {
             data.imageUrl.map((img) => {
               return (
                 <img
-                  src={`http://localhost:5000/uploads/${img}`}
+                  src={`https://bookmypitch.onrender.com/uploads/${img}`}
                   alt="Turf image"
                   className="object-contain w-[35vw]  "
                 />
