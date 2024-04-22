@@ -63,8 +63,8 @@ export const createCheckoutSession = async (req, res) => {
     const session = await stripeInstance.checkout.sessions.create({
       line_items: [line_item],
       mode: "payment",
-      success_url: `http://localhost:5173/success/${data.bookingId}`,
-      cancel_url: `http://localhost:5173/cancel/${data.bookingId}`,
+      success_url: `https://book-my-pitch.vercel.app/success/${data.bookingId}`,
+      cancel_url: `https://book-my-pitch.vercel.app/cancel/${data.bookingId}`,
     });
 
     res.status(201).send({ id: session.id });
